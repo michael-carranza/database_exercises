@@ -1,11 +1,17 @@
 use employees;
-
 -- Find all employees with first names 'Irena', 'Vidya', or 'Maya' — 709 rows (Hint: Use IN).
 SELECT emp_no, first_name, last_name
 FROM employees
-WHERE first_name = 'Irena'
+WHERE last_name IN ('Irena', 'Vidya', 'Maya');
+
+-- Find all employees with first names 'Irena', 'Vidya', or 'Maya' — 709 rows (Using OR).
+# Add a condition to the previous query to find everybody with those names who is also male — 441 rows.
+SELECT emp_no, first_name, last_name
+FROM employees
+WHERE (first_name = 'Irena'
 OR first_name ='Vidya'
-OR first_name = 'Maya';
+OR first_name = 'Maya')
+AND gender = 'M';
 
 -- Find all employees whose last name starts with 'E' — 7,330 rows.
 SELECT emp_no, first_name, last_name
@@ -26,3 +32,27 @@ WHERE birth_date like '%-12-25';
 SELECT emp_no, first_name, last_name
 FROM employees
 WHERE last_name like '%Q%';
+
+-- Find all employees whose last name starts or ends with 'E' — 30,723 rows
+SELECT emp_no, first_name, last_name
+FROM employees
+WHERE last_name like 'E%'
+OR last_name like '%E';
+
+# Duplicate the previous query and update it to find all employees whose last name starts and ends with 'E' — 899 rows.
+SELECT emp_no, first_name, last_name
+FROM employees
+WHERE last_name like 'E%'
+AND last_name like '%E';
+
+# Find all employees hired in the 90s and born on Christmas — 362 rows.
+SELECT emp_no, first_name, last_name
+FROM employees
+WHERE (hire_date between '1990-01-01' and '1999-12-31')
+AND (birth_date like '%-12-25');
+
+# Find all employees with a 'q' in their last name but not 'qu' — 547 rows.
+SELECT emp_no, first_name, last_name
+FROM employees
+WHERE (last_name like '%Q%')
+AND (last_name not like '%QU%');
