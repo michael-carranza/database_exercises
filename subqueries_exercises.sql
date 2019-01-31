@@ -36,4 +36,30 @@ join dept_manager on dept_manager.emp_no = employees.emp_no
 where to_date>now()
 and gender = "F";
 
+-- BONUS 1
+-- Find all the department names that currently have female managers.
+select dept_name
+from departments
+where dept_no IN (
+  select dept_no
+  from dept_manager
+  where to_date > now()
+  AND emp_no IN (
+    Select emp_no
+    from employees
+    where gender = "F"
+  )
+);
 
+-- BONUS 2
+-- Find the first and last name of the employee with the highest salary.
+select first_name, last_name
+from employees
+where emp_no IN (
+  select emp_no
+  from salaries
+  where salary IN(
+   select max(salary)
+  from salaries
+)
+);
